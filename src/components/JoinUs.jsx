@@ -161,7 +161,7 @@ const JoinUs = () => {
         {/* Popup */}
         {showPopup && (
           <div
-            className={`${getPopupClass()} fixed top-6 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg text-white font-medium shadow-lg transition-all duration-300`}
+            className={`${getPopupClass()} fixed top-6 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg text-white font-medium shadow-lg transition-all duration-300 z-50`}
           >
             {status}
           </div>
