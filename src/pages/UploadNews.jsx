@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import heroBg from "../assets/background.jpg";
 
 const UploadNews = () => {
   const [title, setTitle] = useState("");
@@ -16,8 +15,8 @@ const UploadNews = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("isAdmin"); // clear login
-    navigate("/admin"); // redirect to login page
+    localStorage.removeItem("isAdmin");
+    navigate("/admin");
   };
 
   const handleImageChange = (e) => {
@@ -56,18 +55,14 @@ const UploadNews = () => {
   };
 
   return (
-    <div
-      className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#d9f1ff] via-[#f9fcff] to-[#ffffff]"
-      style={{
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Page Wrapper */}
-      <div className="w-full max-w-2xl bg-white/80 backdrop-blur-md shadow-2xl rounded-2xl p-6 flex flex-col relative">
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1f2c] via-[#0f172a] to-[#1e293b] overflow-hidden">
+      {/* Background blobs */}
+      <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-[#00B4D8] opacity-30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-[#0077B6] opacity-30 rounded-full blur-3xl animate-pulse delay-700"></div>
 
-        {/* Logout Button */}
+      {/* Card */}
+      <div className="relative w-full max-w-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-8 z-10">
+        {/* Logout */}
         <button
           onClick={handleLogout}
           className="absolute top-4 right-4 px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium shadow hover:bg-red-600 transition"
@@ -75,11 +70,12 @@ const UploadNews = () => {
           🚪 Logout
         </button>
 
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-[#0077b6] mb-4">
-          Upload News 📰
+        <h2 className="text-3xl font-extrabold text-center text-white mb-6">
+          📰 Upload News
         </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-grow">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           {/* Title */}
           <input
             type="text"
@@ -87,7 +83,7 @@ const UploadNews = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="px-4 py-3 border border-gray-200 rounded-xl bg-white/70 text-gray-900 text-base shadow-sm focus:outline-none focus:border-[#0077b6] focus:ring-2 focus:ring-[#0077b6]/40 transition-all"
+            className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:border-[#00B4D8] transition"
           />
 
           {/* Content */}
@@ -97,14 +93,12 @@ const UploadNews = () => {
             onChange={(e) => setContent(e.target.value)}
             rows="5"
             required
-            className="px-4 py-3 border border-gray-200 rounded-xl bg-white/70 text-gray-900 text-base shadow-sm focus:outline-none focus:border-[#0077b6] focus:ring-2 focus:ring-[#0077b6]/40 transition-all"
+            className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:border-[#00B4D8] transition"
           />
 
           {/* File Upload */}
-          <label className="cursor-pointer border border-dashed border-[#0077b6] rounded-xl px-4 py-6 bg-[#f0faff] text-center text-gray-700 hover:bg-[#e0f6ff] transition-all">
-            <span className="block text-sm font-medium">
-              📷 Click to upload image
-            </span>
+          <label className="cursor-pointer flex flex-col items-center justify-center border border-dashed border-[#00B4D8] rounded-lg px-6 py-6 bg-white/5 text-gray-300 hover:bg-white/10 transition">
+            <span className="block text-sm font-medium">📷 Click to upload image</span>
             <input
               type="file"
               accept="image/*"
@@ -118,14 +112,14 @@ const UploadNews = () => {
             <img
               src={image}
               alt="Preview"
-              className="w-full max-h-[200px] object-cover rounded-xl mt-2 shadow-lg hover:scale-[1.02] transition-transform duration-300"
+              className="w-full max-h-[200px] object-cover rounded-lg mt-2 shadow-lg hover:scale-[1.02] transition-transform duration-300"
             />
           )}
 
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
-            className="mt-auto px-6 py-3 rounded-xl bg-gradient-to-r from-[#0077b6] to-[#00b4d8] text-white text-lg font-semibold shadow-md hover:shadow-xl hover:scale-105 transition-transform duration-300"
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-[#0077B6] to-[#00B4D8] text-white font-bold shadow-lg hover:shadow-[#00B4D8]/40 hover:scale-[1.02] transition-transform duration-300"
           >
             🚀 Upload News
           </button>

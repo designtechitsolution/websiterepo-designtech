@@ -1,5 +1,5 @@
 import React from "react";
-import background from "../assets/background.jpg";
+import background from "../assets/background.png";
 
 const Hero = () => {
   return (
@@ -8,7 +8,7 @@ const Hero = () => {
       style={{ backgroundImage: `url(${background})` }}
     >
       <div className="max-w-[800px] mx-auto text-center">
-        <h1 className="text-blue-900 text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-snug">
+        <h1 className="text-blue-900 text-3xl sm:text-4xl md:text-5xl font-bold mt-28 mb-6 leading-snug">
           Empowering Businesses with Talent and Technology
         </h1>
         <p className="text-gray-800 text-base sm:text-lg md:text-xl mb-10 leading-relaxed">
