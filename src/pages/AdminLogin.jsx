@@ -83,10 +83,7 @@ const AdminLogin = () => {
           </button>
         </form>
 
-        {/* Hint */}
-        <p className="mt-6 text-center text-sm text-gray-400">
-          Hint: <span className="font-semibold text-white">admin / 12345</span>
-        </p>
+        
       </div>
     </div>
   );

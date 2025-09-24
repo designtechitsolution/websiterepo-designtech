@@ -156,7 +156,7 @@ const Header = () => {
             onClick={() => handleScrollTo("staffing")}
             className="px-4 py-2 text-gray-800 font-medium rounded hover:bg-gradient-to-r hover:from-blue-100 hover:to-teal-100 hover:text-teal-800 transition-all"
           >
-            Staffing
+            IT Staffing
           </button>
 
           {/* News Dropdown */}
@@ -325,7 +325,7 @@ const Header = () => {
             }}
             className="py-3 px-3 rounded-lg hover:bg-teal-100 hover:shadow-md transition-all font-medium text-left"
           >
-            Staffing
+            IT Staffing
           </button>
 
           {/* Mobile News Accordion */}
