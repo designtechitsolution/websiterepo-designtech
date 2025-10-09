@@ -44,6 +44,18 @@ const Header = () => {
     };
   }, [mobileOpen]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileOpen]);
+
   // Smooth scroll helper
   const handleScrollTo = (id) => {
     if (location.pathname !== "/") {
@@ -72,25 +84,25 @@ const Header = () => {
           : "bg-white/90 backdrop-blur-md border-b-2 border-gradient-to-r from-blue-400 via-purple-400 to-teal-400"
       }`}
     >
-      <div className="flex justify-between items-center py-3 md:py-4 px-4 md:px-12 w-full">
+      <div className="flex justify-between items-center py-3 md:py-3 lg:py-4 px-4 md:px-6 lg:px-12 w-full">
         {/* Logo + Company */}
-        <div className="flex items-center gap-2 md:gap-4 lg:gap-6 group">
+        <div className="flex items-center gap-2 md:gap-3 lg:gap-6 group">
           <Link to="/" className="transform transition-all duration-300 hover:scale-110">
             <img
               src={logo}
               alt="Design Tech IT Solution"
-              className="h-12 md:h-14 lg:h-16 xl:h-20 object-contain drop-shadow-lg"
+              className="h-12 md:h-12 lg:h-16 xl:h-20 object-contain drop-shadow-lg"
             />
           </Link>
           <img
             src={company}
             alt="Design Tech IT Solution"
-            className="w-[140px] md:w-[180px] lg:w-[220px] xl:w-[280px] object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+            className="w-[140px] md:w-[160px] lg:w-[220px] xl:w-[280px] object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
           />
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-1 md:gap-2 lg:gap-3 items-center">
+        <nav className="hidden lg:flex gap-3 items-center">
           <Link
             to="/"
             className="relative px-3 lg:px-4 py-2 text-gray-700 font-semibold rounded-lg hover:text-blue-600 transition-all duration-300 group overflow-hidden"
@@ -226,11 +238,11 @@ const Header = () => {
           </button>
         </nav>
 
-        {/* Mobile Hamburger */}
-        <div className="md:hidden flex items-center">
+        {/* Mobile & Tablet Hamburger */}
+        <div className="lg:hidden flex items-center">
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="hamburger-btn text-white bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-lg focus:outline-none relative z-50 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+            className="hamburger-btn text-white bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-lg focus:outline-none relative z-60 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
           >
             <div className="w-6 h-6 flex flex-col justify-between items-center">
               <span
@@ -253,18 +265,32 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Slide-in Menu */}
-      <div
-        className={`fixed top-0 right-0 h-auto min-h-screen w-72 bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 backdrop-blur-xl text-gray-700 shadow-2xl border-l border-blue-200/50 z-40 transform transition-transform duration-500 ease-out mobile-menu ${
-          mobileOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="flex flex-col mt-20 p-6 gap-2">
+      {/* Mobile & Tablet Slide-in Menu */}
+      {mobileOpen && (
+        <>
+          {/* Overlay */}
+          <div
+            className="lg:hidden fixed inset-0 bg-black/50 z-40 backdrop-blur-sm animate-fadeIn"
+            onClick={() => setMobileOpen(false)}
+          ></div>
+
+          {/* Menu */}
+          <div
+            className="lg:hidden fixed top-0 right-0 h-screen w-80 md:w-96 max-w-[85vw] bg-gradient-to-br from-blue-600 via-purple-600 to-blue-700 text-white shadow-2xl z-50 animate-slideInRight mobile-menu"
+          >
+        {/* Mobile Menu Header */}
+        <div className="bg-white/10 backdrop-blur-sm p-6 md:p-8 border-b border-white/20">
+          <h3 className="text-xl md:text-2xl font-bold text-white">Menu</h3>
+        </div>
+
+        {/* Scrollable Menu Content */}
+        <div className="flex flex-col p-4 md:p-6 gap-1 md:gap-2 overflow-y-auto h-[calc(100vh-88px)] md:h-[calc(100vh-104px)] pb-6">
           <Link
             to="/"
-            className="py-3 px-3 rounded-lg hover:bg-teal-100 hover:shadow-md transition-all font-medium"
+            className="group py-3.5 md:py-4 px-4 md:px-5 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all font-semibold md:text-lg flex items-center gap-3 border border-transparent hover:border-white/30"
             onClick={() => setMobileOpen(false)}
           >
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white group-hover:scale-150 transition-transform"></span>
             Home
           </Link>
           <button
@@ -272,8 +298,9 @@ const Header = () => {
               handleScrollTo("about");
               setMobileOpen(false);
             }}
-            className="py-3 px-3 rounded-lg hover:bg-teal-100 hover:shadow-md transition-all font-medium text-left"
+            className="group py-3.5 md:py-4 px-4 md:px-5 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all font-semibold md:text-lg text-left flex items-center gap-3 border border-transparent hover:border-white/30"
           >
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white group-hover:scale-150 transition-transform"></span>
             About
           </button>
           <button
@@ -281,8 +308,9 @@ const Header = () => {
               handleScrollTo("vision");
               setMobileOpen(false);
             }}
-            className="py-3 px-3 rounded-lg hover:bg-teal-100 hover:shadow-md transition-all font-medium text-left"
+            className="group py-3.5 md:py-4 px-4 md:px-5 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all font-semibold md:text-lg text-left flex items-center gap-3 border border-transparent hover:border-white/30"
           >
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white group-hover:scale-150 transition-transform"></span>
             Vision & Mission
           </button>
 
@@ -290,16 +318,19 @@ const Header = () => {
           <div className="flex flex-col">
             <div
               onClick={toggleMobileServices}
-              className="flex justify-between items-center cursor-pointer py-3 px-3 rounded-lg hover:bg-teal-100 hover:shadow-md transition-all font-medium"
+              className="group flex justify-between items-center cursor-pointer py-3.5 md:py-4 px-4 md:px-5 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all font-semibold md:text-lg border border-transparent hover:border-white/30"
             >
-              IT Services
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white group-hover:scale-150 transition-transform"></span>
+                IT Services
+              </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
+                width="14"
+                height="14"
                 fill="none"
                 viewBox="0 0 16 16"
-                className={`stroke-teal-700 transform transition-transform duration-300 ${
+                className={`stroke-white transform transition-transform duration-300 md:w-4 md:h-4 ${
                   mobileServicesOpen ? "rotate-180" : ""
                 }`}
               >
@@ -307,26 +338,29 @@ const Header = () => {
               </svg>
             </div>
             {mobileServicesOpen && (
-              <div className="flex flex-col ml-4 mt-2 gap-1">
+              <div className="flex flex-col ml-6 md:ml-8 mt-1 md:mt-2 gap-1 md:gap-2 animate-fadeInUp">
                 <Link
                   to="/cloud"
-                  className="py-2 px-3 rounded-lg hover:bg-teal-50 hover:shadow-sm transition-all font-medium"
+                  className="py-2.5 md:py-3 px-4 md:px-5 rounded-lg hover:bg-white/15 transition-all font-medium md:text-base flex items-center gap-2 text-blue-100"
                   onClick={() => setMobileOpen(false)}
                 >
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-blue-200"></span>
                   Lumora Cloud
                 </Link>
                 <Link
                   to="/ai"
-                  className="py-2 px-3 rounded-lg hover:bg-teal-50 hover:shadow-sm transition-all font-medium"
+                  className="py-2.5 md:py-3 px-4 md:px-5 rounded-lg hover:bg-white/15 transition-all font-medium md:text-base flex items-center gap-2 text-purple-100"
                   onClick={() => setMobileOpen(false)}
                 >
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-purple-200"></span>
                   Lumora AI
                 </Link>
                 <Link
                   to="/secure"
-                  className="py-2 px-3 rounded-lg hover:bg-teal-50 hover:shadow-sm transition-all font-medium"
+                  className="py-2.5 md:py-3 px-4 md:px-5 rounded-lg hover:bg-white/15 transition-all font-medium md:text-base flex items-center gap-2 text-teal-100"
                   onClick={() => setMobileOpen(false)}
                 >
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-teal-200"></span>
                   Lumora Secure
                 </Link>
               </div>
@@ -338,8 +372,9 @@ const Header = () => {
               handleScrollTo("staffing");
               setMobileOpen(false);
             }}
-            className="py-3 px-3 rounded-lg hover:bg-teal-100 hover:shadow-md transition-all font-medium text-left"
+            className="group py-3.5 md:py-4 px-4 md:px-5 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all font-semibold md:text-lg text-left flex items-center gap-3 border border-transparent hover:border-white/30"
           >
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white group-hover:scale-150 transition-transform"></span>
             IT Staffing
           </button>
 
@@ -347,16 +382,19 @@ const Header = () => {
           <div className="flex flex-col">
             <div
               onClick={toggleMobileNews}
-              className="flex justify-between items-center cursor-pointer py-3 px-3 rounded-lg hover:bg-teal-100 hover:shadow-md transition-all font-medium"
+              className="group flex justify-between items-center cursor-pointer py-3.5 md:py-4 px-4 md:px-5 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all font-semibold md:text-lg border border-transparent hover:border-white/30"
             >
-              News
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white group-hover:scale-150 transition-transform"></span>
+                News
+              </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
+                width="14"
+                height="14"
                 fill="none"
                 viewBox="0 0 16 16"
-                className={`stroke-teal-700 transform transition-transform duration-300 ${
+                className={`stroke-white transform transition-transform duration-300 md:w-4 md:h-4 ${
                   mobileNewsOpen ? "rotate-180" : ""
                 }`}
               >
@@ -364,19 +402,21 @@ const Header = () => {
               </svg>
             </div>
             {mobileNewsOpen && (
-              <div className="flex flex-col ml-4 mt-2 gap-1">
+              <div className="flex flex-col ml-6 md:ml-8 mt-1 md:mt-2 gap-1 md:gap-2 animate-fadeInUp">
                 <Link
                   to="/upload-news"
-                  className="py-2 px-3 rounded-lg hover:bg-teal-50 hover:shadow-sm transition-all font-medium"
+                  className="py-2.5 md:py-3 px-4 md:px-5 rounded-lg hover:bg-white/15 transition-all font-medium md:text-base flex items-center gap-2 text-blue-100"
                   onClick={() => setMobileOpen(false)}
                 >
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-blue-200"></span>
                   Upload News
                 </Link>
                 <Link
                   to="/view-news"
-                  className="py-2 px-3 rounded-lg hover:bg-teal-50 hover:shadow-sm transition-all font-medium"
+                  className="py-2.5 md:py-3 px-4 md:px-5 rounded-lg hover:bg-white/15 transition-all font-medium md:text-base flex items-center gap-2 text-purple-100"
                   onClick={() => setMobileOpen(false)}
                 >
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-purple-200"></span>
                   View News
                 </Link>
               </div>
@@ -388,28 +428,26 @@ const Header = () => {
               handleScrollTo("contact");
               setMobileOpen(false);
             }}
-            className="py-3 px-3 rounded-lg hover:bg-teal-100 hover:shadow-md transition-all font-medium text-left"
+            className="group py-3.5 md:py-4 px-4 md:px-5 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all font-semibold md:text-lg text-left flex items-center gap-3 border border-transparent hover:border-white/30"
           >
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white group-hover:scale-150 transition-transform"></span>
             Contact
           </button>
+          
+          {/* Join Us Button - Highlighted */}
           <button
             onClick={() => {
               handleScrollTo("joinus");
               setMobileOpen(false);
             }}
-            className="py-3 px-3 rounded-lg hover:bg-teal-100 hover:shadow-md transition-all font-medium text-left"
+            className="mt-4 md:mt-6 py-4 md:py-5 px-4 md:px-5 rounded-xl bg-white text-blue-600 font-bold md:text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 md:gap-3"
           >
+            <span className="text-lg md:text-xl">🚀</span>
             Join Us
           </button>
         </div>
-      </div>
-
-      {/* Overlay */}
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 bg-gray-500/40 z-30"
-          onClick={() => setMobileOpen(false)}
-        ></div>
+          </div>
+        </>
       )}
     </header>
   );
