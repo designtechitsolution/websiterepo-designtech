@@ -60,15 +60,7 @@ const LumoraCloud = () => {
         ))}
       </div>
 
-      {/* CTA Button */}
-      <a
-        href="#contact"
-        className="relative z-10 mt-16 px-10 py-4 bg-gradient-to-r from-[#0077B6] to-[#00B4D8] text-white font-bold rounded-full shadow-lg hover:scale-110 hover:shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 text-lg animate-fadeInUp group overflow-hidden"
-        style={{ animationDelay: '0.8s' }}
-      >
-        <span className="relative z-10">Contact Us →</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#00B4D8] to-[#0077B6] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      </a>
+      
       
     </section>
   );

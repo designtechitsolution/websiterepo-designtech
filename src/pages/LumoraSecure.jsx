@@ -60,15 +60,7 @@ const LumoraSecure = () => {
         ))}
       </div>
 
-      {/* CTA Button */}
-      <a
-        href="#contact"
-        className="relative z-10 mt-16 px-10 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 font-bold rounded-full shadow-lg hover:scale-110 hover:shadow-2xl hover:shadow-yellow-500/50 transition-all duration-300 text-lg animate-fadeInUp group overflow-hidden"
-        style={{ animationDelay: '0.8s' }}
-      >
-        <span className="relative z-10">Contact Us →</span>
-        <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      </a>
+      
       
     </section>
   );
