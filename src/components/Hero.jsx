@@ -7,7 +7,7 @@ const heroSlides = [
     id: 1,
     image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80',
     title: 'Transform Your Digital Future',
-    subtitle: 'Enterprise IT Solutions & Cloud Infrastructure',
+    subtitle: 'Transform your IT infrastructure into a secure, scalable, and agile environment.',
     cta: 'Explore Cloud',
     link: '/cloud',
     icon: Cloud,
@@ -17,7 +17,7 @@ const heroSlides = [
     id: 2,
     image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1920&q=80',
     title: 'Secure Your Business',
-    subtitle: 'Advanced Cybersecurity & Data Protection',
+    subtitle: 'Protect your business from modern cyber threats while maintaining trust and compliance.',
     cta: 'Learn More',
     link: '/secure',
     icon: Shield,
@@ -27,7 +27,7 @@ const heroSlides = [
     id: 3,
     image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1920&q=80',
     title: 'AI-Powered Innovation',
-    subtitle: 'Intelligent Automation & Machine Learning Solutions',
+    subtitle: 'Harness the power of Artificial Intelligence and Generative AI to transform your business.',
     cta: 'Discover AI',
     link: '/ai',
     icon: Cpu,
@@ -62,14 +62,6 @@ const Hero = () => {
   const goToSlide = (index) => {
     setDirection(index > currentSlide ? 1 : -1);
     setCurrentSlide(index);
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      console.log('Searching for:', searchQuery);
-      // Implement search functionality here
-    }
   };
 
   const CurrentIcon = heroSlides[currentSlide].icon;
@@ -117,24 +109,6 @@ const Hero = () => {
                   <p className="text-lg md:text-xl lg:text-2xl text-gray-200 mb-6 md:mb-8 animate-slideInRight">
                     {slide.subtitle}
                   </p>
-
-                  {/* Search Bar */}
-                  <form onSubmit={handleSearch} className="bg-white rounded-full shadow-2xl p-1.5 md:p-2 flex items-center mb-6 md:mb-8 max-w-2xl animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
-                    <Search className="w-4 md:w-5 h-4 md:h-5 text-gray-400 ml-3 md:ml-4" />
-                    <input
-                      type="text"
-                      placeholder="Search for services, solutions..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="flex-1 px-3 md:px-4 py-2 md:py-3 outline-none text-gray-800 text-sm md:text-base"
-                    />
-                    <button 
-                      type="submit"
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 md:px-8 py-2 md:py-3 rounded-full text-sm md:text-base font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 mr-1"
-                    >
-                      Search
-                    </button>
-                  </form>
 
                   {/* CTAs */}
                   <div className="flex flex-wrap gap-3 md:gap-4 animate-zoomIn" style={{ animationDelay: '0.5s' }}>
