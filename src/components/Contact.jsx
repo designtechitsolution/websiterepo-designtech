@@ -73,7 +73,7 @@ const Contact = () => {
                   <MapPin className="w-5 md:w-6 h-5 md:h-6 text-yellow-300 flex-shrink-0 mt-1 group-hover/item:scale-110 group-hover/item:animate-bounce-slow transition-transform duration-300" />
                   <div>
                     <p className="font-bold text-yellow-200 text-xs md:text-sm mb-1">Address</p>
-                    <p className="text-base md:text-lg font-semibold">No. 299, Shree Complex,<br />Gandhipuram, Coimbatore</p>
+                    <p className="text-base md:text-lg font-semibold">No. 299, Shree Complex,<br />Gandhipuram, Coimbatore,<br/> Tamil Nadu, India</p>
                   </div>
                 </div>
               </div>

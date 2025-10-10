@@ -238,7 +238,7 @@ const JoinUs = () => {
         {/* Enhanced Popup - Above Header */}
         {showPopup && (
           <div
-            className={`${getPopupClass()} fixed top-24 left-1/2 -translate-x-1/2 px-8 py-4 rounded-xl text-white font-semibold shadow-2xl z-[100] animate-fadeInUp flex items-center gap-3`}
+            className={`${getPopupClass()} fixed top-30 left-1/2 -translate-x-1/2 px-8 py-4 rounded-xl text-white font-semibold shadow-2xl z-[100] animate-fadeInUp flex items-center gap-3`}
           >
             {status.includes("✅") && <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">✓</div>}
             {status.includes("⚠️") && <div className="w-6 h-6 bg-black/20 rounded-full flex items-center justify-center">!</div>}
