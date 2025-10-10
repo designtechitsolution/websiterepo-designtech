@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Cloud, Cpu, Shield, ArrowRight, Sparkles } from "lucide-react";
+import { Cloud, Cpu, Shield, TrendingUp, Code, ArrowRight, Sparkles } from "lucide-react";
 
 const ITServices = () => {
   const services = [
@@ -43,6 +43,34 @@ const ITServices = () => {
         "Identity & access management",
       ],
       path: "/secure",
+    },
+    {
+      icon: <TrendingUp size={50} color="#0077B6" />,
+      title: "Digital Marketing",
+      subtitle: "Amplify Your Reach",
+      description: [
+        "SEO & SEM strategies for online visibility",
+        "Social Media Marketing across all platforms",
+        "Content Marketing with engaging content",
+        "Email Marketing campaigns that convert",
+        "Analytics & Reporting for data-driven decisions",
+        "Brand Strategy & Positioning",
+      ],
+      path: "/digital-marketing",
+    },
+    {
+      icon: <Code size={50} color="#0077B6" />,
+      title: "Web Development",
+      subtitle: "Build Your Digital Future",
+      description: [
+        "Custom Web Applications for your business",
+        "Responsive Design for all devices",
+        "E-commerce Solutions with secure payments",
+        "Progressive Web Apps (PWA)",
+        "API Development & Integration",
+        "Performance Optimization",
+      ],
+      path: "/web-development",
     },
   ];
 

@@ -169,6 +169,20 @@ const Header = () => {
                   <span className="w-2 h-2 rounded-full bg-teal-500 group-hover:scale-125 transition-transform"></span>
                   Lumora Secure
                 </Link>
+                <Link
+                  to="/digital-marketing"
+                  className="group flex items-center gap-3 px-6 py-3 text-gray-700 font-medium hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600 transition-all duration-300"
+                >
+                  <span className="w-2 h-2 rounded-full bg-pink-500 group-hover:scale-125 transition-transform"></span>
+                  Digital Marketing
+                </Link>
+                <Link
+                  to="/web-development"
+                  className="group flex items-center gap-3 px-6 py-3 text-gray-700 font-medium hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600 transition-all duration-300"
+                >
+                  <span className="w-2 h-2 rounded-full bg-green-500 group-hover:scale-125 transition-transform"></span>
+                  Web Development
+                </Link>
               </div>
             )}
           </div>
@@ -362,6 +376,22 @@ const Header = () => {
                 >
                   <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-teal-200"></span>
                   Lumora Secure
+                </Link>
+                <Link
+                  to="/digital-marketing"
+                  className="py-2.5 md:py-3 px-4 md:px-5 rounded-lg hover:bg-white/15 transition-all font-medium md:text-base flex items-center gap-2 text-pink-100"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-pink-200"></span>
+                  Digital Marketing
+                </Link>
+                <Link
+                  to="/web-development"
+                  className="py-2.5 md:py-3 px-4 md:px-5 rounded-lg hover:bg-white/15 transition-all font-medium md:text-base flex items-center gap-2 text-green-100"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-green-200"></span>
+                  Web Development
                 </Link>
               </div>
             )}

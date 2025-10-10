@@ -19,6 +19,9 @@ import ScrollToTop from "./components/ScrollToTop";
 import LumoraCloud from "./pages/LumoraCloud";
 import LumoraAI from "./pages/LumoraAI";
 import LumoraSecure from "./pages/LumoraSecure";
+import DigitalMarketing from "./pages/DigitalMarketing";
+import WebDevelopment from "./pages/WebDevelopment";
+import Portfolio from "./pages/Portfolio";
 
 // News pages
 import UploadNews from "./pages/UploadNews";
@@ -53,6 +56,9 @@ function App() {
         <Route path="/cloud" element={<LumoraCloud />} />
         <Route path="/ai" element={<LumoraAI />} />
         <Route path="/secure" element={<LumoraSecure />} />
+        <Route path="/digital-marketing" element={<DigitalMarketing />} />
+        <Route path="/web-development" element={<WebDevelopment />} />
+        <Route path="/portfolio" element={<Portfolio />} />
 
         {/* Admin & News */}
         <Route path="/admin" element={<AdminLogin />} />
