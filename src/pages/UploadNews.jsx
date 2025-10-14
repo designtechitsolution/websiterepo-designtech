@@ -113,134 +113,184 @@ const UploadNews = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-start py-12 bg-gradient-to-br from-[#1a1f2c] via-[#0f172a] to-[#1e293b] overflow-y-auto">
-      {/* Background blobs */}
-      <div className="fixed -top-40 -left-40 w-[500px] h-[500px] bg-[#00B4D8] opacity-30 rounded-full blur-3xl animate-pulse"></div>
-      <div className="fixed -bottom-40 -right-40 w-[500px] h-[500px] bg-[#0077B6] opacity-30 rounded-full blur-3xl animate-pulse delay-700"></div>
-
-      {/* Card */}
-      <div className="relative w-full max-w-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-8 z-10">
-        {/* Logout */}
-        <button
-          onClick={handleLogout}
-          className="absolute top-4 right-4 px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium shadow hover:bg-red-600 transition"
-        >
-          🚪 Logout
-        </button>
-
-        <h2 className="text-3xl font-extrabold text-center text-white mb-6">
-          {editingId ? "✏️ Edit News" : "📰 Upload News"}
-        </h2>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          {/* Title */}
-          <input
-            type="text"
-            placeholder="Enter News Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:border-[#00B4D8] transition"
-          />
-
-          {/* Content */}
-          <textarea
-            placeholder="Enter News Content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows="5"
-            required
-            className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:border-[#00B4D8] transition"
-          />
-
-          {/* File Upload */}
-          <label className="cursor-pointer flex flex-col items-center justify-center border border-dashed border-[#00B4D8] rounded-lg px-6 py-6 bg-white/5 text-gray-300 hover:bg-white/10 transition">
-            <span className="block text-sm font-medium">📷 Click to upload image</span>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden"
-            />
-          </label>
-
-          {/* Preview */}
-          {image && (
-            <img
-              src={image}
-              alt="Preview"
-              className="w-full max-h-[200px] object-cover rounded-lg mt-2 shadow-lg hover:scale-[1.02] transition-transform duration-300"
-            />
-          )}
-
-          {/* Submit */}
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              className="flex-1 py-3 rounded-lg bg-gradient-to-r from-[#0077B6] to-[#00B4D8] text-white font-bold shadow-lg hover:shadow-[#00B4D8]/40 hover:scale-[1.02] transition-transform duration-300"
-            >
-              {editingId ? "💾 Update News" : "🚀 Upload News"}
-            </button>
-            {editingId && (
-              <button
-                type="button"
-                onClick={handleCancelEdit}
-                className="px-6 py-3 rounded-lg bg-gray-500 text-white font-bold shadow-lg hover:bg-gray-600 transition"
-              >
-                ❌ Cancel
-              </button>
-            )}
-          </div>
-        </form>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-6 sm:py-8 md:py-12 px-3 sm:px-4 lg:px-6">
+      {/* Subtle Background Pattern */}
+      <div className="fixed inset-0 opacity-30 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 to-purple-100/50"></div>
       </div>
 
-      {/* News List */}
-      {newsList.length > 0 && (
-        <div className="relative w-full max-w-2xl mt-8 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-8 z-10">
-          <h3 className="text-2xl font-bold text-white mb-6">📋 Manage News</h3>
-          <div className="space-y-4">
-            {newsList.map((news) => (
-              <div
-                key={news._id}
-                className="bg-white/5 border border-white/10 rounded-lg p-4 hover:bg-white/10 transition"
+      {/* Main Container */}
+      <div className="relative max-w-7xl mx-auto z-10">
+        {/* Header Section - Responsive */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 sm:mb-8 md:mb-10">
+          <div className="flex-1">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-1 sm:mb-2">
+              {editingId ? "✏️ Edit News" : "📰 News Dashboard"}
+            </h1>
+            <p className="text-sm sm:text-base text-gray-600">
+              {editingId ? "Update your article" : "Create and manage your news articles"}
+            </p>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="self-start sm:self-auto px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg bg-red-500 text-white text-sm sm:text-base font-semibold hover:bg-red-600 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2"
+          >
+            <span>🚪</span>
+            <span>Logout</span>
+          </button>
+        </div>
+
+        {/* Form Card - Responsive */}
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 hover:shadow-xl transition-shadow duration-300">
+
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
+            {/* Title Input */}
+            <div>
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                News Title *
+              </label>
+              <input
+                type="text"
+                placeholder="Enter news title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+              />
+            </div>
+
+            {/* Content Textarea */}
+            <div>
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                News Content *
+              </label>
+              <textarea
+                placeholder="Write your news content here..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                rows="5"
+                required
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none"
+              />
+            </div>
+
+            {/* File Upload */}
+            <div>
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                Featured Image (Optional)
+              </label>
+              <label className="cursor-pointer flex flex-col items-center justify-center border-2 border-dashed border-blue-300 rounded-lg px-4 sm:px-6 py-6 sm:py-8 bg-blue-50 hover:bg-blue-100 hover:border-blue-400 transition-all duration-200 group">
+                <div className="text-center">
+                  <span className="text-3xl sm:text-4xl md:text-5xl mb-2 sm:mb-3 block group-hover:scale-110 transition-transform">📷</span>
+                  <span className="block text-xs sm:text-sm font-medium text-gray-700">Click to upload image</span>
+                  <span className="block text-xs text-gray-500 mt-1">PNG, JPG, GIF up to 10MB</span>
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
+
+            {/* Image Preview */}
+            {image && (
+              <div className="relative">
+                <img
+                  src={image}
+                  alt="Preview"
+                  className="w-full max-h-[200px] sm:max-h-[250px] md:max-h-[300px] object-cover rounded-lg shadow-md border border-gray-200"
+                />
+                <button
+                  type="button"
+                  onClick={() => setImage(null)}
+                  className="absolute top-2 right-2 bg-red-500 text-white rounded-md px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold hover:bg-red-600 active:scale-95 transition-all duration-200 shadow-md"
+                >
+                  ✕ Remove
+                </button>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2 sm:pt-4">
+              <button
+                type="submit"
+                className="flex-1 py-3 sm:py-3.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm sm:text-base shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-indigo-700 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <h4 className="text-lg font-semibold text-white mb-2">
-                      {news.title}
-                    </h4>
-                    <p className="text-gray-300 text-sm line-clamp-2">
-                      {news.content}
-                    </p>
+                <span>{editingId ? "💾" : "🚀"}</span>
+                <span>{editingId ? "Update News" : "Publish News"}</span>
+              </button>
+              {editingId && (
+                <button
+                  type="button"
+                  onClick={handleCancelEdit}
+                  className="px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg bg-gray-500 text-white font-bold text-sm sm:text-base shadow-lg hover:bg-gray-600 active:scale-95 transition-all duration-200"
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+
+        {/* News List - Responsive */}
+        {newsList.length > 0 && (
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 md:p-8 hover:shadow-xl transition-shadow duration-300">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2">
+                <span>📋</span>
+                <span>Published News</span>
+              </h3>
+              <span className="self-start sm:self-auto px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs sm:text-sm font-semibold">
+                {newsList.length} {newsList.length === 1 ? 'Article' : 'Articles'}
+              </span>
+            </div>
+            <div className="space-y-3 sm:space-y-4">
+              {newsList.map((news) => (
+                <div
+                  key={news._id}
+                  className="bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 hover:shadow-md hover:border-blue-300 transition-all duration-200"
+                >
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     {news.image && (
                       <img
                         src={news.image}
                         alt={news.title}
-                        className="mt-3 w-full max-h-32 object-cover rounded-lg"
+                        className="w-full sm:w-28 md:w-32 lg:w-40 h-40 sm:h-28 md:h-32 lg:h-40 object-cover rounded-lg border border-gray-200 flex-shrink-0"
                       />
                     )}
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <button
-                      onClick={() => handleEdit(news)}
-                      className="px-4 py-2 rounded-lg bg-blue-500 text-white text-sm font-medium shadow hover:bg-blue-600 transition"
-                    >
-                      ✏️ Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(news._id)}
-                      className="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium shadow hover:bg-red-600 transition"
-                    >
-                      🗑️ Delete
-                    </button>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1.5 sm:mb-2 line-clamp-2">
+                        {news.title}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-3 sm:mb-4">
+                        {news.content}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => handleEdit(news)}
+                          className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-md sm:rounded-lg bg-blue-500 text-white text-xs sm:text-sm font-semibold hover:bg-blue-600 active:scale-95 transition-all duration-200 flex items-center gap-1.5 shadow-sm"
+                        >
+                          <span>✏️</span>
+                          <span>Edit</span>
+                        </button>
+                        <button
+                          onClick={() => handleDelete(news._id)}
+                          className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-md sm:rounded-lg bg-red-500 text-white text-xs sm:text-sm font-semibold hover:bg-red-600 active:scale-95 transition-all duration-200 flex items-center gap-1.5 shadow-sm"
+                        >
+                          <span>🗑️</span>
+                          <span>Delete</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
