@@ -38,7 +38,6 @@ app.get("/api/news", async (req, res) => {
   res.json(items);
 });
 
-<<<<<<< HEAD
 // PUT /api/news/:id
 app.put("/api/news/:id", async (req, res) => {
   try {
@@ -83,8 +82,6 @@ app.delete("/api/news/:id", async (req, res) => {
   }
 });
 
-=======
->>>>>>> 461755d8fdd4799a7d61572ed0277a7e162ee0ee
 app.listen(process.env.PORT, () =>
   console.log(`🚀 News backend running on http://localhost:${process.env.PORT}`)
 );
