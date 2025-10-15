@@ -1,0 +1,90 @@
+name: Smart Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend_changed: ${{ steps.filter.outputs.backend }}
+      proxy_changed: ${{ steps.filter.outputs.proxy }}
+      frontend_changed: ${{ steps.filter.outputs.frontend }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check which folders changed
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            backend:
+              - 'backend/'
+            proxy:
+              - 'contact-proxy/'
+            frontend:
+              - 'frontend/'
+
+  deploy:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    if: |
+      needs.detect-changes.outputs.backend_changed == 'true' ||
+      needs.detect-changes.outputs.proxy_changed == 'true' ||
+      needs.detect-changes.outputs.frontend_changed == 'true'
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/Design-tech
+
+            git pull origin main
+
+            docker network create designtech-network || true
+
+            if [[ "${{ needs.detect-changes.outputs.backend_changed }}" == "true" ]]; then
+              echo "🟡 Rebuilding backend..."
+              docker stop backend || true
+              docker rm backend || true
+              docker build -t backend ./backend
+              docker run -d \
+                --env-file ./backend/.env \
+                --name backend \
+                --network designtech-network \
+                -p 5000:5000 \
+                backend
+            fi
+
+            if [[ "${{ needs.detect-changes.outputs.proxy_changed }}" == "true" ]]; then
+              echo "🟡 Rebuilding contact-proxy..."
+              docker stop contact-proxy || true
+              docker rm contact-proxy || true
+              docker build -t contact ./contact-proxy
+              docker run -d \
+                --name contact-proxy \
+                --network designtech-network \
+                -p 5001:5001 \
+                contact
+            fi
+
+            if [[ "${{ needs.detect-changes.outputs.frontend_changed }}" == "true" ]]; then
+              echo "🟡 Rebuilding frontend..."
+              docker stop frontend || true
+              docker rm frontend || true
+              docker build -t frontend ./frontend
+              docker run -d \
+                --name frontend \
+                -p 80:80 \
+                frontend
+            fi
+
+            echo "✅ Smart deployment complete!"
