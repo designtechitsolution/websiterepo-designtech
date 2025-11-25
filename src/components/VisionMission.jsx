@@ -1,118 +1,179 @@
-import React from "react";
-import visionBanner from "../assets/vision.jpg";
-import missionBanner from "../assets/mission.jpg";
-import { Eye, Target, Sparkles } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Eye, Target } from "lucide-react";
 
+// Lazy load images
 const VisionMission = () => {
+  const [visionBanner, setVisionBanner] = useState('');
+  const [missionBanner, setMissionBanner] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile view
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    // Lazy load images
+    const loadImages = async () => {
+      try {
+        const [vision, mission] = await Promise.all([
+          import("../assets/vision.png"),
+          import("../assets/mission.png")
+        ]);
+        setVisionBanner(vision.default);
+        setMissionBanner(mission.default);
+      } catch (error) {
+        console.error("Error loading images:", error);
+      }
+    };
+
+    loadImages();
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const section = document.getElementById('vision-mission');
+    if (section) observer.observe(section);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      if (section) observer.unobserve(section);
+    };
+  }, []);
+
+  // Mission points data
+  const missionPoints = [
+    "Build lasting partnerships rooted in trust and collaboration.",
+    "Deliver innovative solutions in Cloud, Cybersecurity, AI, and IT Support.",
+    "Enable sustainable growth by combining people and technology.",
+  ];
+
   return (
     <section
-      id="vision"
-      className="relative py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#F8FDFF] via-[#F0FAFF] to-[#E6F7FB] text-gray-800 overflow-hidden animate-gradient"
+      id="vision-mission"
+      className={`relative py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#F8FDFF] via-[#F0FAFF] to-[#E6F7FB] text-gray-800 overflow-hidden transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      aria-label="Our Vision and Mission"
     >
-      {/* Morphing decorative glows */}
-      <div className="absolute -top-40 -right-40 w-[450px] h-[450px] bg-gradient-to-br from-blue-400 to-cyan-400 opacity-30 blur-3xl animate-floatSlow animate-morphing"></div>
-      <div className="absolute -bottom-40 -left-40 w-[450px] h-[450px] bg-gradient-to-br from-teal-400 to-green-400 opacity-30 blur-3xl animate-floatSlow animate-morphing" style={{ animationDelay: '2s' }}></div>
-      <div className="absolute top-1/3 right-1/4 w-[200px] h-[200px] bg-gradient-to-br from-yellow-300 to-orange-300 opacity-20 blur-3xl animate-floatSlow animate-morphing" style={{ animationDelay: '1s' }}></div>
-      <div className="absolute bottom-1/4 left-1/3 w-[250px] h-[250px] bg-gradient-to-br from-purple-300 to-pink-300 opacity-20 blur-3xl animate-floatSlow animate-morphing" style={{ animationDelay: '3s' }}></div>
+      {/* Reduced decorative elements for better performance */}
+      <div className="absolute -top-40 -right-40 w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] bg-gradient-to-br from-blue-400 to-cyan-400 opacity-20 blur-2xl sm:blur-3xl"></div>
+      <div className="absolute -bottom-40 -left-40 w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] bg-gradient-to-br from-teal-400 to-green-400 opacity-20 blur-2xl sm:blur-3xl"></div>
 
       <div className="relative z-10 max-w-6xl mx-auto text-center mb-10 sm:mb-12 lg:mb-14">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-5">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0077B6] via-[#00A6C3] to-[#0077B6] animate-gradient bg-[length:200%_100%]">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-5">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0077B6] via-[#00A6C3] to-[#0077B6] bg-[length:200%_100%]">
             Our Vision & Mission
           </span>
-        </h2>
+        </h1>
         <p className="text-gray-600 text-sm sm:text-base max-w-3xl mx-auto">
           Guiding principles that drive our commitment to excellence and innovation
         </p>
       </div>
-      
+
       <div className="relative z-10 max-w-6xl mx-auto space-y-10 sm:space-y-12 lg:space-y-14">
-        {/* Vision Row - Content left, Image right */}
-        <div className="flex flex-col lg:flex-row items-center gap-5 sm:gap-6 lg:gap-8 group">
-          {/* Image first on mobile/tablet, second on desktop */}
-          <div className="w-full lg:flex-1 lg:flex-[1.1] lg:order-2 relative animate-slideInRight">
-            <div className="absolute -inset-2 sm:-inset-3 lg:-inset-4 bg-gradient-to-r from-blue-400 to-teal-400 rounded-2xl sm:rounded-3xl opacity-15 sm:opacity-20 blur-xl group-hover:opacity-30 sm:group-hover:opacity-40 transition-opacity duration-300 sm:duration-500"></div>
-            <img
-              src={visionBanner}
-              alt="Vision Banner"
-              className="relative w-full h-[220px] sm:h-[280px] lg:h-[350px] object-cover rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg transition-all duration-300 group-hover:scale-[1.02] lg:group-hover:scale-[1.03] group-hover:shadow-lg group-hover:shadow-[#0077B6]/20"
-            />
-            <div className="absolute inset-0 rounded-2xl sm:rounded-3xl border-2 border-transparent group-hover:border-[#0077B6]/30 sm:group-hover:border-[#0077B6]/50 transition duration-300 sm:duration-500"></div>
+        {/* Vision Section */}
+        <article className="flex flex-col lg:flex-row items-center gap-5 sm:gap-6 lg:gap-8">
+          <div className="w-full lg:flex-1 lg:order-2 relative ">
+            {visionBanner && (
+              <div className="relative group">
+                <div className="absolute -inset-2 sm:-inset-3 bg-gradient-to-r from-blue-400 to-teal-400 rounded-2xl sm:rounded-3xl opacity-10 sm:opacity-15 blur-xl transition-opacity duration-300 group-hover:opacity-20 "></div>
+                <img
+                  src={visionBanner}
+                  alt="Illustration representing our vision"
+                  width={600}
+                  height={400}
+                  loading="lazy"
+                  className="relative w-full h-[220px] sm:h-[280px] lg:h-[350px] object-cover rounded-xl sm:rounded-2xl shadow-md transition-all duration-300 group-hover:scale-[1.02] "
+                />
+              </div>
+            )}
           </div>
 
-          {/* Text card second on mobile/tablet, first on desktop */}
-          <div className="w-full lg:flex-1 lg:flex-[0.9] lg:order-1 text-center lg:text-left bg-white/90 backdrop-blur-md p-5 sm:p-6 lg:p-8 rounded-xl shadow-lg border-2 border-[#A3D8F4]/50 transition-all duration-300 group-hover:shadow-md group-hover:shadow-[#0077B6]/15 group-hover:bg-white/95 lg:group-hover:-translate-x-1 animate-slideInLeft relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-blue-400/10 rounded-full blur-xl animate-pulse"></div>
+          <div className="w-full lg:flex-1 lg:order-1 text-center lg:text-left bg-white/90 backdrop-blur-md p-5 sm:p-6 lg:p-8 rounded-xl shadow-lg border-2 border-[#00A6C3]/50 transition-all duration-300 hover:shadow-md hover:shadow-[#0077B6]/15 hover:bg-white/95">
             <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 mb-3 sm:mb-4">
-              <Eye className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-[#0077B6] animate-glow" />
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight relative text-[#0077B6]">
+              <Eye className="w-6 h-6 sm:w-8 sm:h-8 text-[#0077B6]" aria-hidden="true" />
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0077B6]">
                 Our Vision
               </h2>
             </div>
-            <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 relative">
+            <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4">
               "To be a trusted partner for businesses worldwide, empowering them
               to achieve growth, innovation, and excellence through skilled people
               and cutting-edge technology."
             </p>
-            <p className="text-gray-600 text-sm sm:text-base leading-relaxed relative">
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
               Our vision emphasizes{" "}
-              <span className="font-semibold text-[#0077B6] transition-colors duration-300 hover:text-teal-600">trust</span>,{" "}
-              <span className="font-semibold text-[#0077B6] transition-colors duration-300 hover:text-teal-600">collaboration</span>, and{" "}
-              <span className="font-semibold text-[#0077B6] transition-colors duration-300 hover:text-teal-600">impact</span>,
+              <span className="font-semibold text-[#0077B6]">trust</span>,{" "}
+              <span className="font-semibold text-[#0077B6]">collaboration</span>, and{" "}
+              <span className="font-semibold text-[#0077B6]">impact</span>,
               focusing on <em className="font-semibold not-italic">client success</em> over mere service delivery.
             </p>
+            <p className="text-gray-700 text-sm sm:text-base leading-relaxed mt-3 sm:mt-4">
+              Our vision is to lead with integrity, inspire confidence, and become the partner organizations 
+              rely on to navigate change, embrace digital evolution, and unlock their fullest potential.
+            </p>
           </div>
-        </div>
+        </article>
 
-        {/* Mission Row - Image left, Content right */}
-        <div className="flex flex-col lg:flex-row items-center gap-5 sm:gap-6 lg:gap-8 group">
-          {/* Image first on all screens */}
-          <div className="w-full lg:flex-1 lg:flex-[1.1] lg:order-1 relative animate-slideInLeft" style={{ animationDelay: '0.2s' }}>
-            <div className="absolute -inset-2 sm:-inset-3 lg:-inset-4 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-2xl sm:rounded-3xl opacity-15 sm:opacity-20 blur-xl group-hover:opacity-30 sm:group-hover:opacity-40 transition-opacity duration-300 sm:duration-500"></div>
-            <img
-              src={missionBanner}
-              alt="Mission Banner"
-              className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] xl:h-[450px] object-cover rounded-2xl sm:rounded-3xl shadow-lg sm:shadow-xl transition-all duration-500 sm:duration-700 group-hover:scale-[1.04] sm:group-hover:scale-[1.06] lg:group-hover:scale-[1.08] group-hover:rotate-0 sm:group-hover:rotate-1 group-hover:shadow-xl sm:group-hover:shadow-2xl group-hover:shadow-[#00A6C3]/20 sm:group-hover:shadow-[#00A6C3]/30"
-            />
-            <div className="absolute inset-0 rounded-2xl sm:rounded-3xl border-2 border-transparent group-hover:border-[#00A6C3]/30 sm:group-hover:border-[#00A6C3]/50 transition duration-300 sm:duration-500"></div>
+        {/* Mission Section */}
+        <article className="flex flex-col lg:flex-row items-center gap-5 sm:gap-6 lg:gap-8">
+          <div className="w-full lg:flex-1 relative">
+            {missionBanner && (
+              <div className="relative group">
+                <div className="absolute -inset-2 sm:-inset-3 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-2xl sm:rounded-3xl opacity-10 sm:opacity-15 blur-xl transition-opacity duration-300 group-hover:opacity-20"></div>
+                <img
+                  src={missionBanner}
+                  alt="Illustration representing our mission"
+                  width={600}
+                  height={500}
+                  loading="lazy"
+                  className="relative w-full h-[250px] sm:h-[300px] lg:h-[380px] object-cover rounded-xl sm:rounded-2xl shadow-md transition-all duration-300 group-hover:scale-[1.02]"
+                />
+              </div>
+            )}
           </div>
 
-          {/* Text card second on all screens */}
-          <div className="w-full lg:flex-1 lg:flex-[0.9] lg:order-2 text-center lg:text-left bg-white/80 backdrop-blur-lg p-6 sm:p-8 lg:p-10 xl:p-12 rounded-2xl shadow-xl sm:shadow-2xl border-2 border-[#00A6C3]/50 transition-all duration-500 sm:duration-700 group-hover:shadow-xl sm:group-hover:shadow-2xl group-hover:shadow-[#00A6C3]/20 sm:group-hover:shadow-[#00A6C3]/30 group-hover:bg-white/90 lg:group-hover:translate-x-2 xl:group-hover:translate-x-4 animate-slideInRight relative overflow-hidden" style={{ animationDelay: '0.2s' }}>
-            <div className="absolute bottom-0 left-0 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 xl:w-32 xl:h-32 bg-teal-400/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+          <div className="w-full lg:flex-1 text-center lg:text-left bg-white/80 backdrop-blur-md p-6 sm:p-8 lg:p-10 rounded-xl shadow-lg border-2 border-[#00A6C3]/50 transition-all duration-300 hover:shadow-md hover:shadow-[#00A6C3]/15 hover:bg-white/90">
             <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 mb-3 sm:mb-4">
-              <Target className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-[#00A6C3] animate-glow" />
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight relative text-[#00A6C3]">
+              <Target className="w-6 h-6 sm:w-8 sm:h-8 text-[#00A6C3]" aria-hidden="true" />
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#00A6C3]">
                 Our Mission
               </h2>
             </div>
-            <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 relative">
+            <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4">
               Our mission is to empower businesses to thrive by connecting them with
               the right talent and delivering technology solutions that simplify operations
               and drive growth.
             </p>
-            <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 relative font-medium">
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 font-medium">
               We aim to:
             </p>
-            <ul className="space-y-2 text-left relative">
-              {[
-                "Build lasting partnerships rooted in trust and collaboration.",
-                "Deliver innovative solutions in Cloud, Cybersecurity, AI, and IT Support.",
-                "Enable sustainable growth by combining people, processes, and technology.",
-              ].map((point, idx) => (
+            <ul className="space-y-2 text-left">
+              {missionPoints.map((point, idx) => (
                 <li
                   key={idx}
-                  className="relative pl-6 text-gray-700 text-sm sm:text-base before:absolute before:left-0 before:top-0 before:text-[#00A6C3] before:content-['✔'] transition-all duration-200 hover:translate-x-1 hover:text-[#00A6C3]"
+                  className="relative pl-6 text-gray-700 text-sm sm:text-base before:absolute before:left-0 before:top-0 before:text-[#00A6C3] before:content-['✓']"
                 >
                   {point}
                 </li>
               ))}
             </ul>
           </div>
-        </div>
+        </article>
       </div>
     </section>
   );
 };
 
-export default VisionMission;
+export default React.memo(VisionMission);

@@ -72,7 +72,7 @@ const JoinUs = () => {
 
   const getPopupClass = () => {
     if (status.includes("✅")) return "bg-green-600";
-    if (status.includes("⚠️")) return "bg-yellow-400 text-black";
+    if (status.includes("⚠️")) return "bg-yellow-300 text-black";
     if (status.includes("❌")) return "bg-red-600";
     return "bg-gray-700";
   };
@@ -241,7 +241,9 @@ const JoinUs = () => {
 
         {/* Status Popup */}
         {showPopup && (
-          <div className={`fixed bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-medium text-white shadow-lg z-50 flex items-center gap-2 animate-bounceIn ${getPopupClass()} max-w-[calc(100%-2rem)] sm:max-w-max`}>
+          <div 
+            className={`fixed left-1/2 top-20 sm:top-32 transform -translate-x-1/2 px-6 py-3 rounded-full text-sm font-medium text-white shadow-lg z-[99999] flex items-center justify-center gap-2 animate-bounceIn ${getPopupClass()} max-w-[90%] sm:max-w-max backdrop-blur-sm min-w-[200px]`}
+          >
             {status}
           </div>
         )}

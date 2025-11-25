@@ -118,7 +118,7 @@ const Header = () => {
             <span className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></span>
           </button>
           <button
-            onClick={() => handleScrollTo("vision")}
+            onClick={() => handleScrollTo("vision-mission")}
             className="relative px-3 lg:px-4 py-2 text-gray-700 font-semibold rounded-lg hover:text-blue-600 transition-all duration-300 group overflow-hidden"
           >
             <span className="relative z-10">Vision & Mission</span>
