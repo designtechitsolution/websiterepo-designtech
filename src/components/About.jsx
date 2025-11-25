@@ -4,11 +4,8 @@ import aboutImg from "../assets/about-us1.jpg"; // adjust path if needed
 const About = () => {
   return (
     <section id="about" className="relative py-12 md:py-16 lg:py-16 px-4 md:px-8 lg:px-8 bg-gradient-to-br from-gray-50 via-blue-50 to-white overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute top-10 right-10 w-60 md:w-80 h-60 md:h-80 bg-blue-300/15 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-10 left-10 w-72 md:w-96 h-72 md:h-96 bg-teal-300/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
-      
-      <div className="relative z-10 max-w-[1400px] mx-auto mt-16 md:mt-20 flex flex-col gap-10">
+
+      <div className="relative z-10 max-w-[1400px] mx-auto mt-16 md:mt-8 flex flex-col gap-10">
         {/* About Card */}
         <div className="flex flex-col lg:flex-row items-center gap-6 md:gap-8 lg:gap-8 bg-white/80 backdrop-blur-lg rounded-2xl md:rounded-3xl p-6 md:p-10 lg:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group relative overflow-hidden border border-blue-200/50 animate-fadeInUp">
           {/* Decorative gradient overlay */}

@@ -5,6 +5,7 @@ import "./App.css";
 // Components
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import ImageBanner from "./components/ImageBanner";
 import JoinUs from "./components/JoinUs";
 import About from "./components/About";
 import VisionMission from "./components/VisionMission";
@@ -45,6 +46,7 @@ function App() {
               <VisionMission />
               <StaffingServices />
               <WhyChooseUs />
+              <ImageBanner />
               <About />
               <Contact />
               <JoinUs />
